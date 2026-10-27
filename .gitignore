@@ -1,0 +1,13 @@
+# Secrets and local links (never commit)
+.env.pilot
+.env*
+.vercel/
+.vercel-buswhere/
+# Build output
+buswhere_app/build/
+# Supabase CLI local state
+supabase/.temp/
+supabase/.branches/
+# Editors / OS
+.DS_Store
+Thumbs.db
