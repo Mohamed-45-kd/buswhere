@@ -101,7 +101,8 @@ class _ToastHostState extends State<ToastHost> {
             duration: BW.base,
             switchInCurve: BW.easeOut,
             transitionBuilder: (c, a) => FadeTransition(opacity: a, child: SlideTransition(position: Tween(begin: const Offset(0, .2), end: Offset.zero).animate(a), child: c)),
-            child: t == null ? const SizedBox.shrink() : BWToast(t.message, key: ValueKey(t), icon: t.icon, tone: t.tone, actionLabel: t.actionLabel, onAction: t.onAction),
+            // Toasts sit above the Navigator, outside any Material: give them one so text is styled.
+            child: t == null ? const SizedBox.shrink() : Material(key: ValueKey(t), type: MaterialType.transparency, child: BWToast(t.message, icon: t.icon, tone: t.tone, actionLabel: t.actionLabel, onAction: t.onAction)),
           ),
         ),
       ),

@@ -229,7 +229,12 @@ class LiveService extends ChangeNotifier {
       villages.where((v) => v.districtId == districtId && (!activeOnly || v.isActive)).toList();
   List<Stop> stopsOf(String villageId) => stops.where((s) => s.villageId == villageId).toList()..sort((a, b) => a.sort.compareTo(b.sort));
 
-  int activeBusCount(String villageId) => busLive.values.where((b) => b.villageId == villageId && b.visible).length;
+  /// Buses working [villageId] that are near enough to be offered to its riders.
+  int activeBusCount(String villageId) {
+    final v = villageOrNull(villageId);
+    if (v == null) return 0;
+    return busLive.values.where((b) => b.villageId == villageId && b.visible && _dist(b.position!, v.center) <= maxRiderDistanceM).length;
+  }
 
   int waitingCount({String? villageId, String? destId, String? stopId}) {
     var n = 0;
