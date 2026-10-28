@@ -28,7 +28,7 @@ enum PlaceKind { me, destination, waiting, stop, gps }
 
 /// Light, low-detail CARTO/OSM map with BusWhere markers on top.
 class BusMap extends StatefulWidget {
-  const BusMap({super.key, required this.center, this.zoom = 15, this.buses = const [], this.places = const [], this.route = const [], this.onBusTap, this.onTilesFailed, this.focus, this.onMapTap, this.onPlaceTap});
+  const BusMap({super.key, required this.center, this.zoom = 15, this.buses = const [], this.places = const [], this.route = const [], this.onBusTap, this.onTilesFailed, this.focus, this.onMapTap, this.onPlaceTap, this.focusZoom, this.focusLift = 0});
   final LatLng center;
   final double zoom;
   final List<MapBus> buses;
@@ -37,6 +37,8 @@ class BusMap extends StatefulWidget {
   final ValueChanged<String>? onBusTap;
   final VoidCallback? onTilesFailed;
   final LatLng? focus; // pan here when it changes
+  final double? focusZoom; // zoom to this when panning to [focus]
+  final double focusLift; // keep [focus] this many px above the middle (e.g. over a bottom card)
   final ValueChanged<LatLng>? onMapTap;
   final ValueChanged<String>? onPlaceTap; // a stop's id
 
@@ -54,7 +56,7 @@ class _BusMapState extends State<BusMap> {
     super.didUpdateWidget(old);
     final f = widget.focus;
     if (_ready && f != null && f != old.focus) {
-      _ctl.move(f, _ctl.camera.zoom);
+      _ctl.move(f, widget.focusZoom ?? _ctl.camera.zoom, offset: Offset(0, -widget.focusLift));
     }
   }
 

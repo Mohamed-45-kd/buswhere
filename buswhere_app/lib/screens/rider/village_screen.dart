@@ -64,12 +64,14 @@ class _VillageScreenState extends State<VillageScreen> {
         icon: 'circle-check',
         tone: ToastTone.success,
       ));
+      app.tripStart = '/rider/from';
       context.go('/rider/to');
     }
 
     void pick(String id) {
       if (isFrom) {
         app.setFrom(id);
+        app.tripStart = '/rider/from';
         context.go('/rider/to');
       } else {
         app.setTo(id);
@@ -81,8 +83,9 @@ class _VillageScreenState extends State<VillageScreen> {
     return Scaffold(
       body: SafeArea(
         child: Column(children: [
-          BWTopBar(title: title, subtitle: sub, onBack: () => context.go(isFrom ? '/rider/city' : '/rider/from')),
-          StepBar(widget.step),
+          BWTopBar(title: title, subtitle: sub, onBack: () => context.go(isFrom ? '/rider/city' : app.tripStart)),
+          // Coming from the GPS step the trip has two steps (where you are, where you go); by hand it has three.
+          !isFrom && app.tripStart == '/rider/locate' ? const StepBar(2, total: 2) : StepBar(widget.step),
           Expanded(
             child: ListenableBuilder(
               listenable: live,

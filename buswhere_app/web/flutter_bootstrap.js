@@ -6,8 +6,11 @@
 _flutter.loader.load({
   config: { canvasKitBaseUrl: 'canvaskit/' },
   onEntrypointLoaded: async function (engineInitializer) {
-    const appRunner = await engineInitializer.initializeEngine();
+    // Run inside #app instead of taking over the page, so Flutter leaves our viewport tag alone.
+    const appRunner = await engineInitializer.initializeEngine({ hostElement: document.getElementById('app') });
     await appRunner.runApp();
+    // Keep the splash up until the first frame is drawn at the right size.
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     const s = document.getElementById('splash');
     if (s) {
       s.style.opacity = '0';

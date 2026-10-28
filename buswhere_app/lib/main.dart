@@ -11,6 +11,7 @@ import 'screens/driver/village_pick_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/rider/bus_detail_screen.dart';
 import 'screens/rider/city_screen.dart';
+import 'screens/rider/locate_screen.dart';
 import 'screens/rider/rider_home.dart';
 import 'screens/rider/village_screen.dart';
 import 'screens/welcome_screen.dart';
@@ -56,18 +57,19 @@ class _BusWhereAppState extends State<BusWhereApp> {
       if (loc == '/' && app.onboarded && first) {
         if (app.role == 'driver') return '/driver';
         if (app.role == 'admin') return '/admin';
-        return app.tripReady ? '/rider' : '/rider/city';
+        return app.tripReady ? '/rider' : '/rider/locate';
       }
       if (loc.startsWith('/driver') && loc != '/driver/login' && live.me == null) return '/driver/login';
       if (loc == '/driver/login' && live.me != null) return '/driver';
       if (loc == '/admin' && !live.isAdmin) return '/admin/login';
       if (loc == '/admin/login' && live.isAdmin) return '/admin';
-      if ((loc == '/rider' || loc.startsWith('/rider/bus')) && !app.tripReady) return '/rider/city';
+      if ((loc == '/rider' || loc.startsWith('/rider/bus')) && !app.tripReady) return '/rider/locate';
       return null;
     },
     routes: [
       GoRoute(path: '/', builder: (_, _) => const WelcomeScreen()),
       GoRoute(path: '/intro', builder: (_, _) => const IntroScreen()),
+      GoRoute(path: '/rider/locate', builder: (_, _) => const LocateScreen()),
       GoRoute(path: '/rider/city', builder: (_, _) => const CityScreen()),
       GoRoute(path: '/rider/from', builder: (_, _) => const VillageScreen(step: 2)),
       GoRoute(path: '/rider/to', builder: (_, _) => const VillageScreen(step: 3)),

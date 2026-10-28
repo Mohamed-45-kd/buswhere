@@ -41,6 +41,8 @@ class AppState extends ChangeNotifier {
   late Set<String> favourites;
   late List<String> recent;
   bool online = true;
+  /// Where "Xagee u socotaa?" goes back to: the GPS step or the village list.
+  String tripStart = '/rider/from';
 
   /// Somali first, English second — swaps when the person picks English.
   String t(String so, String enText) => en ? enText : so;

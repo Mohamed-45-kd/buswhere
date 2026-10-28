@@ -18,7 +18,7 @@ class WelcomeScreen extends StatelessWidget {
     final live = app.live;
     void start() {
       app.setRole('rider');
-      context.go(!app.introSeen ? '/intro' : (app.tripReady ? '/rider' : '/rider/city'));
+      context.go(!app.introSeen ? '/intro' : (app.tripReady ? '/rider' : '/rider/locate'));
     }
 
     return Scaffold(

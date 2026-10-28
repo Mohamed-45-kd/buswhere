@@ -3,7 +3,9 @@
 <head>
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Final viewport from the first byte. Flutter runs inside #app (below), so it never swaps this tag,
+       which used to make the app flash narrow (laid out at desktop width) while starting. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="description" content="BusWhere — ogow halka uu basku joogo. Live city bus tracking for Hargeisa.">
   <meta name="theme-color" content="#12222E">
 
@@ -16,7 +18,8 @@
   <link rel="manifest" href="manifest.json">
   <title>BusWhere</title>
   <style>
-    html, body { margin: 0; height: 100%; background: #12222E; }
+    html, body { margin: 0; height: 100%; background: #12222E; overflow: hidden; overscroll-behavior: none; }
+    #app { position: fixed; inset: 0; touch-action: none; }
     #splash { z-index: 10; position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; background: #12222E; transition: opacity 200ms ease-out; }
     #splash img { width: 96px; height: 96px; border-radius: 22px; }
     #splash .dots { display: flex; gap: 8px; }
@@ -28,6 +31,7 @@
 </head>
 <body>
   <!-- Shown on slow data until Flutter draws its first frame. -->
+  <div id="app"></div>
   <div id="splash" aria-label="BusWhere">
     <img src="icons/Icon-192.png" alt="">
     <div class="dots"><span></span><span></span><span></span></div>

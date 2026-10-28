@@ -28,7 +28,7 @@ class _IntroScreenState extends State<IntroScreen> {
   void _finish() {
     final app = AppScope.read(context);
     app.setIntroSeen();
-    context.go(app.tripReady ? '/rider' : '/rider/city');
+    context.go(app.tripReady ? '/rider' : '/rider/locate');
   }
 
   @override
