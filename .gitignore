@@ -11,3 +11,6 @@ supabase/.branches/
 # Editors / OS
 .DS_Store
 Thumbs.db
+# Private product documents (kept on this computer only)
+*.pdf
+*.zip
